@@ -1,0 +1,6 @@
+[submodule "client"]
+	path = client
+	url = https://github.com/Tiagoblima/mini-reactjs.git
+[submodule "server"]
+	path = server
+	url = https://1b9003a4d821011e5ae6a981eccdf1f4e7a9f21b@github.com/aiboxlab/tce-decisoes-backend.git

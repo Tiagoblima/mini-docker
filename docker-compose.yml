@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+
+######################
+# Setup node container
+######################
+    web: 
+    
+        build: 
+            context: ./client
+            dockerfile: Dockerfile
+        container_name: web
+        environment:
+            - REACT_APP_PORT=${REACT_APP_PORT}
+        depends_on: 
+            - fastapi
+        ports:
+            - ${REACT_APP_PORT}:${REACT_APP_PORT}
+            
+        working_dir: /app
+        links:
+            - "fastapi:textapi"
+        volumes:
+            - './client:/app'
+            - '/app/node_modules'
+      
+        command: npm run start 
+
+    fastapi:
+        build: 
+            context: ./server
+            dockerfile: Dockerfile
+        container_name: fastapi
+        expose:
+            - ${APP_SERVER_PORT}
+        image: textapi 
+        ports:
+            - ${APP_SERVER_PORT}:${APP_SERVER_PORT}
+        volumes:
+            - ./server/src:/app/app
+        command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+        
+           
+            
+        
